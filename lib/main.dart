@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_example/services/service_locator.dart';
+import 'package:flutter_riverpod_example/view/passenger_view.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await registerServices();
+  runApp(const ProviderScope(child: MyApp()));
 }
 
 class MyApp extends StatelessWidget {
@@ -11,24 +15,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Riverpod',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const Home(),
-    );
-  }
-}
-
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text("Home"),
-      ),
+      home: const PassengerView(),
     );
   }
 }
