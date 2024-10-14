@@ -16,7 +16,7 @@ class PassengerProvider extends StateNotifier<PassengerState> {
   int? totalPageCount;
 
   void getPassengers({bool enableLoaderState = true, int? page}) async {
-    state = PassengerState(
+    state = state.copyWith(
         passengersList: data,
         loaderState: LoaderState.loading,
         enableLoaderState: enableLoaderState);
@@ -32,12 +32,12 @@ class PassengerProvider extends StateNotifier<PassengerState> {
       }
 
       totalPageCount = model?.totalPages;
-      state = PassengerState(
+      state = state.copyWith(
           passengersList: data,
           loaderState: LoaderState.loaded,
           enableLoaderState: enableLoaderState);
     } catch (e) {
-      state = PassengerState(
+      state = state.copyWith(
           error: e.toString(),
           loaderState: LoaderState.error,
           enableLoaderState: enableLoaderState);
