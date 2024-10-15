@@ -1,11 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_example/riverpod/counter/counter_state.dart';
 
-class CounterProvider extends StateNotifier<CounterState> {
-  CounterProvider()
-      : super(const CounterState(
-            counter: 0, counterOne: 0, counterTwo: 0, counterThree: 0));
-
+class CounterProvider extends Notifier<CounterState> {
   void incrementCounter() {
     int value = state.counter ?? 0;
     state = state.copyWith(counter: value + 1);
@@ -44,5 +40,11 @@ class CounterProvider extends StateNotifier<CounterState> {
   void decrementCounterThree() {
     int value = state.counterThree ?? 0;
     state = state.copyWith(counterThree: value - 1);
+  }
+
+  @override
+  CounterState build() {
+    return const CounterState(
+        counter: 0, counterOne: 0, counterTwo: 0, counterThree: 0);
   }
 }

@@ -10,9 +10,7 @@ class CounterView extends StatelessWidget {
   CounterView({super.key});
 
   final counterProvider =
-      StateNotifierProvider<CounterProvider, CounterState>((ref) {
-    return CounterProvider();
-  });
+      NotifierProvider<CounterProvider, CounterState>(CounterProvider.new);
 
   @override
   Widget build(BuildContext context) {

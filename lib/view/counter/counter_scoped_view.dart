@@ -6,7 +6,7 @@ import 'package:flutter_riverpod_example/riverpod/counter/counter_provider.dart'
 import 'package:flutter_riverpod_example/riverpod/counter/counter_state.dart';
 
 class CounterScopedView extends StatelessWidget {
-  final StateNotifierProvider<CounterProvider, CounterState> counterProvider;
+  final NotifierProvider<CounterProvider, CounterState> counterProvider;
   final int? selectedCounter;
   const CounterScopedView(
       {super.key,
