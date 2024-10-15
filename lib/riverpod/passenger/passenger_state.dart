@@ -8,6 +8,7 @@ class PassengerState extends Equatable {
   final String? error;
   final LoaderState? loaderState;
   final bool? enableLoaderState;
+
   const PassengerState(
       {this.passengersList,
       this.error,
@@ -17,6 +18,18 @@ class PassengerState extends Equatable {
   @override
   List<Object?> get props =>
       [passengersList, error, loaderState, enableLoaderState];
+
+  PassengerState copyWith(
+      {List<PassengerData>? passengersList,
+      String? error,
+      LoaderState? loaderState,
+      bool? enableLoaderState}) {
+    return PassengerState(
+        passengersList: passengersList ?? passengersList,
+        error: error ?? this.error,
+        loaderState: loaderState ?? this.loaderState,
+        enableLoaderState: enableLoaderState ?? this.enableLoaderState);
+  }
 }
 
 enum LoaderState { loaded, loading, error }

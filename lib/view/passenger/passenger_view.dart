@@ -14,10 +14,8 @@ class PassengerView extends ConsumerStatefulWidget {
 }
 
 class _PassengerDetailViewState extends ConsumerState<PassengerView> {
-  final passengerProvider =
-      StateNotifierProvider<PassengerProvider, PassengerState>((ref) {
-    return PassengerProvider();
-  });
+  final passengerProvider = NotifierProvider<PassengerProvider, PassengerState>(
+      PassengerProvider.new);
 
   @override
   void initState() {
@@ -86,7 +84,7 @@ class SwitchView extends StatelessWidget {
 }
 
 class PassengerLoadedView extends ConsumerStatefulWidget {
-  final StateNotifierProvider<PassengerProvider, PassengerState> provider;
+  final NotifierProvider<PassengerProvider, PassengerState> provider;
   const PassengerLoadedView({
     Key? key,
     required this.provider,
