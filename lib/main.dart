@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_example/services/service_locator.dart';
 import 'package:flutter_riverpod_example/view/counter/counter_view.dart';
 import 'package:flutter_riverpod_example/view/passenger/passenger_view.dart';
+import 'package:flutter_riverpod_example/view/passenger_list/passenger_list_view.dart';
 
 void main() async {
   await registerServices();
@@ -49,7 +50,13 @@ class HomeScreen extends StatelessWidget {
                     Navigator.of(context).push(MaterialPageRoute(
                         builder: (context) => const PassengerView()));
                   },
-                  child: const Text("Passenger"))
+                  child: const Text("Passenger")),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => PassengerListView()));
+                  },
+                  child: const Text("Passenger Dynamic List"))
             ],
           ),
         ),
