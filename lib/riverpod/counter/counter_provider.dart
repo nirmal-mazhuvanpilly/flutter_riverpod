@@ -42,9 +42,28 @@ class CounterProvider extends Notifier<CounterState> {
     state = state.copyWith(counterThree: value - 1);
   }
 
+  void changeColorOne() {
+    state = state.copyWith(colorOne: !(state.colorOne ?? false));
+  }
+
+  void changeColorTwo() {
+    state = state.copyWith(colorTwo: !(state.colorTwo ?? false));
+  }
+
+  void changeColorThree() {
+    state = state.copyWith(colorThree: !(state.colorThree ?? false));
+  }
+
   @override
   CounterState build() {
     return const CounterState(
-        counter: 0, counterOne: 0, counterTwo: 0, counterThree: 0);
+      counter: 0,
+      counterOne: 0,
+      counterTwo: 0,
+      counterThree: 0,
+      colorOne: false,
+      colorTwo: false,
+      colorThree: false,
+    );
   }
 }

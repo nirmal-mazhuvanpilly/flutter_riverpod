@@ -5,7 +5,7 @@ import 'package:flutter_riverpod_example/services/api_services.dart';
 import 'package:flutter_riverpod_example/services/service_locator.dart';
 
 class PassengerProvider extends Notifier<PassengerState> {
-  final _apiServices = getIt.get<ApiServices>();
+  final _apiServices = getIt.get<BaseServices>();
 
   PassengersModel? model;
   List<PassengerData>? data;

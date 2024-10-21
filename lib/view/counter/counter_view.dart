@@ -5,6 +5,7 @@ import 'package:flutter_riverpod_example/riverpod/counter/counter_provider.dart'
 import 'package:flutter_riverpod_example/riverpod/counter/counter_state.dart';
 import 'package:flutter_riverpod_example/riverpod/global_providers.dart';
 import 'package:flutter_riverpod_example/view/counter/counter_scoped_view.dart';
+import 'package:tuple/tuple.dart';
 
 class CounterView extends StatelessWidget {
   CounterView({super.key});
@@ -76,29 +77,42 @@ class CounterView extends StatelessWidget {
                     children: [
                       Consumer(builder: (context, ref, child) {
                         log("Counter One rebuilds");
-                        final value = ref.watch(counterProvider
-                            .select((value) => value.counterOne));
+                        final value = ref.watch(counterProvider.select(
+                            (value) =>
+                                Tuple2(value.counterOne, value.colorOne)));
                         return Text(
-                          value.toString(),
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                          value.item1.toString(),
+                          style: TextStyle(
+                              color: (value.item2 ?? false)
+                                  ? Colors.red
+                                  : Colors.black,
+                              fontWeight: FontWeight.bold),
                         );
                       }),
                       Consumer(builder: (context, ref, child) {
                         log("Row One rebuilds");
                         final value = ref.read(counterProvider.notifier);
-                        return Row(
+                        return Column(
                           children: [
+                            Row(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      value.decrementCounterOne();
+                                    },
+                                    child: const Text("-")),
+                                TextButton(
+                                    onPressed: () {
+                                      value.incrementCounterOne();
+                                    },
+                                    child: const Text("+")),
+                              ],
+                            ),
                             TextButton(
                                 onPressed: () {
-                                  value.decrementCounterOne();
+                                  value.changeColorOne();
                                 },
-                                child: const Text("-")),
-                            TextButton(
-                                onPressed: () {
-                                  value.incrementCounterOne();
-                                },
-                                child: const Text("+")),
+                                child: const Text("Change Color")),
                           ],
                         );
                       }),
@@ -124,29 +138,43 @@ class CounterView extends StatelessWidget {
                     children: [
                       Consumer(builder: (context, ref, child) {
                         log("Counter Two rebuilds");
-                        final value = ref.watch(counterProvider
-                            .select((value) => value.counterTwo));
+
+                        final value = ref.watch(counterProvider.select(
+                            (value) =>
+                                Tuple2(value.counterTwo, value.colorTwo)));
                         return Text(
-                          value.toString(),
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                          value.item1.toString(),
+                          style: TextStyle(
+                              color: (value.item2 ?? false)
+                                  ? Colors.red
+                                  : Colors.black,
+                              fontWeight: FontWeight.bold),
                         );
                       }),
                       Consumer(builder: (context, ref, child) {
                         log("Row Two rebuilds");
                         final value = ref.read(counterProvider.notifier);
-                        return Row(
+                        return Column(
                           children: [
+                            Row(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      value.decrementCounterTwo();
+                                    },
+                                    child: const Text("-")),
+                                TextButton(
+                                    onPressed: () {
+                                      value.incrementCounterTwo();
+                                    },
+                                    child: const Text("+")),
+                              ],
+                            ),
                             TextButton(
                                 onPressed: () {
-                                  value.decrementCounterTwo();
+                                  value.changeColorTwo();
                                 },
-                                child: const Text("-")),
-                            TextButton(
-                                onPressed: () {
-                                  value.incrementCounterTwo();
-                                },
-                                child: const Text("+")),
+                                child: const Text("Change Color")),
                           ],
                         );
                       }),
@@ -172,29 +200,43 @@ class CounterView extends StatelessWidget {
                     children: [
                       Consumer(builder: (context, ref, child) {
                         log("Counter Three rebuilds");
-                        final value = ref.watch(counterProvider
-                            .select((value) => value.counterThree));
+                        final value = ref.watch(counterProvider.select(
+                            (value) =>
+                                Tuple2(value.counterThree, value.colorThree)));
+
                         return Text(
-                          value.toString(),
-                          style: const TextStyle(
-                              color: Colors.black, fontWeight: FontWeight.bold),
+                          value.item1.toString(),
+                          style: TextStyle(
+                              color: (value.item2 ?? false)
+                                  ? Colors.red
+                                  : Colors.black,
+                              fontWeight: FontWeight.bold),
                         );
                       }),
                       Consumer(builder: (context, ref, child) {
                         log("Row Three rebuilds");
                         final value = ref.read(counterProvider.notifier);
-                        return Row(
+                        return Column(
                           children: [
+                            Row(
+                              children: [
+                                TextButton(
+                                    onPressed: () {
+                                      value.decrementCounterThree();
+                                    },
+                                    child: const Text("-")),
+                                TextButton(
+                                    onPressed: () {
+                                      value.incrementCounterThree();
+                                    },
+                                    child: const Text("+")),
+                              ],
+                            ),
                             TextButton(
                                 onPressed: () {
-                                  value.decrementCounterThree();
+                                  value.changeColorThree();
                                 },
-                                child: const Text("-")),
-                            TextButton(
-                                onPressed: () {
-                                  value.incrementCounterThree();
-                                },
-                                child: const Text("+")),
+                                child: const Text("Change Color")),
                           ],
                         );
                       }),
