@@ -2,10 +2,10 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_example/model/passengers/passengers_model.dart';
 import 'package:flutter_riverpod_example/riverpod/passenger/passenger_state.dart';
 import 'package:flutter_riverpod_example/services/api_services.dart';
-import 'package:flutter_riverpod_example/services/service_locator.dart';
+import 'package:flutter_riverpod_example/services/dependency_injection.dart';
 
 class PassengerProvider extends Notifier<PassengerState> {
-  final _apiServices = getIt.get<BaseServices>();
+  late final BaseServices _apiServices;
 
   PassengersModel? model;
   List<PassengerData>? data;
@@ -14,9 +14,7 @@ class PassengerProvider extends Notifier<PassengerState> {
 
   void getPassengers({bool enableLoaderState = true, int? page}) async {
     state = state.copyWith(
-        passengersList: data,
-        loaderState: LoaderState.loading,
-        enableLoaderState: enableLoaderState);
+        loaderState: LoaderState.loading, enableLoaderState: enableLoaderState);
 
     try {
       model = await _apiServices.getPassengers(page: page);
@@ -43,6 +41,7 @@ class PassengerProvider extends Notifier<PassengerState> {
 
   @override
   PassengerState build() {
+    _apiServices = ref.read(baseServicesProvider);
     return const PassengerState(
         loaderState: LoaderState.loaded, enableLoaderState: true);
   }

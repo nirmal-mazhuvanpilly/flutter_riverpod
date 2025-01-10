@@ -25,7 +25,7 @@ class PassengerState extends Equatable {
       LoaderState? loaderState,
       bool? enableLoaderState}) {
     return PassengerState(
-        passengersList: passengersList ?? passengersList,
+        passengersList: passengersList ?? this.passengersList,
         error: error ?? this.error,
         loaderState: loaderState ?? this.loaderState,
         enableLoaderState: enableLoaderState ?? this.enableLoaderState);
