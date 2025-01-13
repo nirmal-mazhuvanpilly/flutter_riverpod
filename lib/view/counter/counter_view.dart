@@ -7,14 +7,17 @@ import 'package:flutter_riverpod_example/riverpod/global_providers.dart';
 import 'package:flutter_riverpod_example/view/counter/counter_scoped_view.dart';
 import 'package:tuple/tuple.dart';
 
-class CounterView extends StatelessWidget {
+class CounterView extends ConsumerWidget {
   CounterView({super.key});
 
   final counterProvider =
       NotifierProvider<CounterProvider, CounterState>(CounterProvider.new);
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    log("***************#########Rebuilds Build Method#########***************");
+    final readGlobalReference = ref.read(counterGlobalProvider.notifier);
+    final readLocalReference = ref.read(counterProvider.notifier);
     return Scaffold(
       body: Center(
         child: Column(
@@ -31,7 +34,7 @@ class CounterView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Consumer(builder: (context, ref, child) {
-                    log("Counter  rebuilds");
+                    log("Counter rebuilds");
                     final value = ref.watch(
                         counterGlobalProvider.select((value) => value.counter));
                     return Text(
@@ -40,20 +43,19 @@ class CounterView extends StatelessWidget {
                           color: Colors.red, fontWeight: FontWeight.bold),
                     );
                   }),
-                  Consumer(builder: (context, ref, child) {
-                    log("Row  rebuilds");
-                    final value = ref.read(counterGlobalProvider.notifier);
+                  Builder(builder: (context) {
+                    log("Counter Button rebuilds");
                     return Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
                             onPressed: () {
-                              value.decrementCounter();
+                              readGlobalReference.decrementCounter();
                             },
                             child: const Text("-")),
                         TextButton(
                             onPressed: () {
-                              value.incrementCounter();
+                              readGlobalReference.incrementCounter();
                             },
                             child: const Text("+")),
                       ],
@@ -89,28 +91,27 @@ class CounterView extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         );
                       }),
-                      Consumer(builder: (context, ref, child) {
-                        log("Row One rebuilds");
-                        final value = ref.read(counterProvider.notifier);
+                      Builder(builder: (context) {
+                        log("Counter One Button rebuilds");
                         return Column(
                           children: [
                             Row(
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      value.decrementCounterOne();
+                                      readLocalReference.decrementCounterOne();
                                     },
                                     child: const Text("-")),
                                 TextButton(
                                     onPressed: () {
-                                      value.incrementCounterOne();
+                                      readLocalReference.incrementCounterOne();
                                     },
                                     child: const Text("+")),
                               ],
                             ),
                             TextButton(
                                 onPressed: () {
-                                  value.changeColorOne();
+                                  readLocalReference.changeColorOne();
                                 },
                                 child: const Text("Change Color")),
                           ],
@@ -138,7 +139,6 @@ class CounterView extends StatelessWidget {
                     children: [
                       Consumer(builder: (context, ref, child) {
                         log("Counter Two rebuilds");
-
                         final value = ref.watch(counterProvider.select(
                             (value) =>
                                 Tuple2(value.counterTwo, value.colorTwo)));
@@ -151,28 +151,27 @@ class CounterView extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         );
                       }),
-                      Consumer(builder: (context, ref, child) {
-                        log("Row Two rebuilds");
-                        final value = ref.read(counterProvider.notifier);
+                      Builder(builder: (context) {
+                        log("Counter Two Button rebuilds");
                         return Column(
                           children: [
                             Row(
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      value.decrementCounterTwo();
+                                      readLocalReference.decrementCounterTwo();
                                     },
                                     child: const Text("-")),
                                 TextButton(
                                     onPressed: () {
-                                      value.incrementCounterTwo();
+                                      readLocalReference.incrementCounterTwo();
                                     },
                                     child: const Text("+")),
                               ],
                             ),
                             TextButton(
                                 onPressed: () {
-                                  value.changeColorTwo();
+                                  readLocalReference.changeColorTwo();
                                 },
                                 child: const Text("Change Color")),
                           ],
@@ -213,28 +212,29 @@ class CounterView extends StatelessWidget {
                               fontWeight: FontWeight.bold),
                         );
                       }),
-                      Consumer(builder: (context, ref, child) {
-                        log("Row Three rebuilds");
-                        final value = ref.read(counterProvider.notifier);
+                      Builder(builder: (context) {
+                        log("Counter Three Button rebuilds");
                         return Column(
                           children: [
                             Row(
                               children: [
                                 TextButton(
                                     onPressed: () {
-                                      value.decrementCounterThree();
+                                      readLocalReference
+                                          .decrementCounterThree();
                                     },
                                     child: const Text("-")),
                                 TextButton(
                                     onPressed: () {
-                                      value.incrementCounterThree();
+                                      readLocalReference
+                                          .incrementCounterThree();
                                     },
                                     child: const Text("+")),
                               ],
                             ),
                             TextButton(
                                 onPressed: () {
-                                  value.changeColorThree();
+                                  readLocalReference.changeColorThree();
                                 },
                                 child: const Text("Change Color")),
                           ],

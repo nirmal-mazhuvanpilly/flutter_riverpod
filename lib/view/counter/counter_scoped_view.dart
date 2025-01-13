@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_riverpod_example/riverpod/counter/counter_provider.dart';
 import 'package:flutter_riverpod_example/riverpod/counter/counter_state.dart';
 
-class CounterScopedView extends StatelessWidget {
+class CounterScopedView extends ConsumerWidget {
   final NotifierProvider<CounterProvider, CounterState> counterProvider;
   final int? selectedCounter;
   const CounterScopedView(
@@ -57,7 +57,7 @@ class CounterScopedView extends StatelessWidget {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: Center(
         child: Container(
@@ -79,9 +79,8 @@ class CounterScopedView extends StatelessWidget {
                       color: Colors.black, fontWeight: FontWeight.bold),
                 );
               }),
-              Consumer(builder: (context, ref, child) {
-                log("Scoped Row rebuilds");
-
+              Builder(builder: (context) {
+                log("Scoped View Button rebuilds");
                 return Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   mainAxisAlignment: MainAxisAlignment.center,
