@@ -4,8 +4,14 @@ import 'package:flutter_riverpod_example/view/counter/counter_view.dart';
 import 'package:flutter_riverpod_example/view/passenger/passenger_view.dart';
 import 'package:flutter_riverpod_example/view/passenger_list/passenger_list_view.dart';
 
+final providerContainer = ProviderContainer();
 void main() async {
-  runApp(const ProviderScope(child: MyApp()));
+  runApp(
+    UncontrolledProviderScope(
+      container: providerContainer,
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {

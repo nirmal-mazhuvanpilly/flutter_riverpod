@@ -1,36 +1,47 @@
+import 'dart:developer';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_example/main.dart';
 import 'package:flutter_riverpod_example/model/passengers/passengers_model.dart';
+import 'package:flutter_riverpod_example/riverpod/global_providers.dart';
 import 'package:flutter_riverpod_example/riverpod/passenger/passenger_state.dart';
 import 'package:flutter_riverpod_example/services/api_services.dart';
 import 'package:flutter_riverpod_example/services/dependency_injection.dart';
 
 class PassengerProvider extends Notifier<PassengerState> {
   late final BaseServices _apiServices;
-
-  PassengersModel? model;
-  List<PassengerData>? data;
   int pageCount = 1;
   int? totalPageCount;
 
+  void getCounterStateDetails() {
+    providerContainer.read(counterGlobalProvider.notifier).incrementCounter();
+    log(providerContainer.read(counterGlobalProvider).counter.toString());
+  }
+
   void getPassengers({bool enableLoaderState = true, int? page}) async {
+    getCounterStateDetails(); // Increment state of counter everytime API hits. Just for testing
     state = state.copyWith(
         loaderState: LoaderState.loading, enableLoaderState: enableLoaderState);
-
     try {
-      model = await _apiServices.getPassengers(page: page);
-      if (data == null || (data?.isEmpty ?? true)) {
-        data = model?.data;
-        pageCount = pageCount + 1;
+      final model = await _apiServices.getPassengers(page: page);
+      final currentData = state.passengersList;
+      if (currentData == null || (currentData.isEmpty)) {
+        state = state.copyWith(
+            passengersList: model?.data,
+            loaderState: LoaderState.loaded,
+            enableLoaderState: enableLoaderState);
       } else {
-        data = [...?data, ...?model?.data];
-        pageCount = pageCount + 1;
+        final List<PassengerData> passengers = [
+          ...currentData,
+          ...model?.data ?? []
+        ];
+        state = state.copyWith(
+            passengersList: passengers,
+            loaderState: LoaderState.loaded,
+            enableLoaderState: enableLoaderState);
       }
-
+      pageCount = pageCount + 1;
       totalPageCount = model?.totalPages;
-      state = state.copyWith(
-          passengersList: data,
-          loaderState: LoaderState.loaded,
-          enableLoaderState: enableLoaderState);
     } catch (e) {
       state = state.copyWith(
           error: e.toString(),

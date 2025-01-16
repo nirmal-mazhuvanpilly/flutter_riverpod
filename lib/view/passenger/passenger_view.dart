@@ -1,6 +1,8 @@
+import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_example/riverpod/global_providers.dart';
 import 'package:flutter_riverpod_example/riverpod/passenger/passenger_provider.dart';
 import 'package:flutter_riverpod_example/riverpod/passenger/passenger_state.dart';
 
@@ -29,7 +31,7 @@ class _PassengerDetailViewState extends ConsumerState<PassengerView> {
 
   @override
   Widget build(BuildContext context) {
-    // print("View Builds");
+    log("Build method rebuilds");
     final loaderState =
         ref.watch(passengerProvider.select((value) => value.loaderState));
     final enableLoaderState =
@@ -38,6 +40,16 @@ class _PassengerDetailViewState extends ConsumerState<PassengerView> {
       appBar: AppBar(
         title: const Text("Passenger"),
         actions: [
+          Consumer(builder: (context, ref, child) {
+            log("Counter rebuilds");
+            final value = ref
+                .watch(counterGlobalProvider.select((value) => value.counter));
+            return Text(
+              value.toString(),
+              style: const TextStyle(
+                  color: Colors.red, fontWeight: FontWeight.bold),
+            );
+          }),
           IconButton(
               onPressed: () {
                 Navigator.of(context).push(MaterialPageRoute(
@@ -65,7 +77,6 @@ class SwitchView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // print("Switch View Builds");
     if (enableLoaderState ?? true) {
       switch (loaderState) {
         case LoaderState.loaded:

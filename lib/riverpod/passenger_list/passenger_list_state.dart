@@ -12,6 +12,7 @@ class PassengerListState extends Equatable {
   List<Object?> get props => [passengersList];
 
   PassengerListState copyWith({List<PassengerData>? passengersList}) {
-    return PassengerListState(passengersList: passengersList ?? passengersList);
+    return PassengerListState(
+        passengersList: passengersList ?? this.passengersList);
   }
 }

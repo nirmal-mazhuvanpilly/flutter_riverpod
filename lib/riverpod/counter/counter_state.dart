@@ -31,7 +31,7 @@ class CounterState extends Equatable {
     bool? colorThree,
   }) {
     return CounterState(
-      counter: counter ?? counter,
+      counter: counter ?? this.counter,
       counterOne: counterOne ?? this.counterOne,
       counterTwo: counterTwo ?? this.counterTwo,
       counterThree: counterThree ?? this.counterThree,
