@@ -1,10 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_riverpod_example/riverpod/global_providers.dart';
+import 'package:flutter_riverpod_example/services/provider_observers.dart';
 import 'package:flutter_riverpod_example/view/counter/counter_view.dart';
 import 'package:flutter_riverpod_example/view/passenger/passenger_view.dart';
 import 'package:flutter_riverpod_example/view/passenger_list/passenger_list_view.dart';
 
-final providerContainer = ProviderContainer();
+final providerContainer = ProviderContainer(
+  observers: [
+    Logger(),
+    CounterProviderObserver(counterGlobalProvider),
+  ],
+);
 void main() async {
   runApp(
     UncontrolledProviderScope(
